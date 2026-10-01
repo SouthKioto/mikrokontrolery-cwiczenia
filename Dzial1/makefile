@@ -1,17 +1,36 @@
-MCU   = atmega328p
-F_CPU = 16000000UL
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra
+MCU     = atmega328p
+F_CPU   = 16000000UL
 
-all: build/main.hex
+CC      = avr-gcc
+OBJCOPY = avr-objcopy
 
-build/main.elf: src/main.c
-	mkdir -p build
-	avr-gcc $(CFLAGS) $< -o $@
+SRC_DIR   = src
+INC_DIR   = include
+BUILD_DIR = build
+TARGET    = $(BUILD_DIR)/main
 
-build/main.hex: build/main.elf
-	avr-objcopy -O ihex -R .eeprom $< $@
+CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -MMD -MP -I$(INC_DIR)
+LDFLAGS = -mmcu=$(MCU)
 
-clean:
-	rm -rf build
+SOURCES := $(wildcard $(SRC_DIR)/*.c)
+OBJECTS := $(SOURCES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+DEPS    := $(OBJECTS:.o=.d)
 
 .PHONY: all clean
+
+all: $(TARGET).hex
+
+$(TARGET).elf: $(OBJECTS)
+	$(CC) $(LDFLAGS) $^ -o $@
+
+$(TARGET).hex: $(TARGET).elf
+	$(OBJCOPY) -O ihex -R .eeprom $< $@
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+-include $(DEPS)
