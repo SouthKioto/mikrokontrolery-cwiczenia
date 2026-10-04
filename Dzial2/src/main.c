@@ -1,3 +1,9 @@
+#include "../include/zad1_push_button.h"
 
+int main() {
+  while (1) {
+    zad1_push_button();
+  }
 
-int main() { return 0; }
+  return 0;
+}

@@ -53,7 +53,7 @@
     ["btn1:1.r", "bb1:23b.f", "", ["$bb"]],
     ["btn1:2.r", "bb1:21b.f", "", ["$bb"]],
     ["uno:3", "btn1:1.r", "violet", ["v-28.8", "h61.6", "v374.4"]],
-    ["uno:GND.2", "btn1:1.l", "black", ["v38.3", "h71.1"]]
+    ["uno:GND.2", "btn1:2.l", "black", ["v38.3", "h71.1"]]
   ],
   "dependencies": {}
 }
