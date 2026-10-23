@@ -14,21 +14,24 @@
 uint8_t poprzedni_stan = 0;
 uint8_t stan_led = 0;
 void zad1_push_button() {
-  KIERUNEK_PORTU_D |= LED;     // pin 4 led jako wyjscie
-  KIERUNEK_PORTU_D &= ~BUTTON; // pin 3 button jako wejscie
-  STAN_PORTU_D |= BUTTON;      // ustawienie
+  while (1) {
 
-  _delay_ms(DEBOUNCE_TIME);
-  uint8_t stan = !STAN_PRZYC;
-  if (stan && !poprzedni_stan) {
-    stan_led = !stan_led;
+    KIERUNEK_PORTU_D |= LED;     // pin 4 led jako wyjscie
+    KIERUNEK_PORTU_D &= ~BUTTON; // pin 3 button jako wejscie
+    STAN_PORTU_D |= BUTTON;      // ustawienie
 
-    if (stan_led) {
-      STAN_PORTU_D |= LED;
-    } else {
-      STAN_PORTU_D &= ~LED;
+    _delay_ms(DEBOUNCE_TIME);
+    uint8_t stan = !STAN_PRZYC;
+    if (stan && !poprzedni_stan) {
+      stan_led = !stan_led;
+
+      if (stan_led) {
+        STAN_PORTU_D |= LED;
+      } else {
+        STAN_PORTU_D &= ~LED;
+      }
     }
-  }
 
-  poprzedni_stan = stan;
+    poprzedni_stan = stan;
+  }
 }
