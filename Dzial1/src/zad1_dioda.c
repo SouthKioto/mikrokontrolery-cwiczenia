@@ -12,9 +12,9 @@ void zad1_dioda(void) {
 
   while (1) {
     STAN_PORTU_D |= PD2_WLACZ;
-    _delay_ms(10000);
+    _delay_ms(100);
 
     STAN_PORTU_D &= PD2_WYLACZ;
-    _delay_ms(10000);
+    _delay_ms(100);
   }
 }

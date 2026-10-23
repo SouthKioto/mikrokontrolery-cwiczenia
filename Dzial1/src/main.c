@@ -4,10 +4,10 @@
 #include "../include/zad4_swiatla.h"
 
 int main(void) {
-  // zad1_dioda();
+   zad1_dioda();
   // zad2_biegnace_swiatlo();
   // zad3_licznik_binarny();
 
-  swiatla_init();
+  //swiatla_init();
   return 0;
 }
